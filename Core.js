@@ -2297,6 +2297,266 @@ replay(`Successfully unbanned the user.`)
 replay("Error")
 }
 }
+
+//=============Economy===============
+
+
+
+//--------------daily---------------------
+break
+case 'daily': case 'reward': {
+	if (m.quoted?.sender) m.mentionedJid.push(m.quoted.sender)
+        if (isBan) return reply(mess.banned)	 			
+        if (isBanChat) return reply(mess.bangc)
+        let user = m.sender
+	const cara = "cara"
+	const daily  = await eco.daily(user, cara, 500); //give 500 for daily, can be changed
+	
+	        if (daily.cd) return replay(`You already claimed daily for today, come back in ${daily.cdL}`); //cdL is already formatted cooldown Left
+	
+            replay(`you claimed 💎${daily.amount} for daily`);        
+}
+break
+
+
+
+//---------------bank-increase--------------------
+
+case 'capacity':  case 'bankupgrade': {
+	//if (!isCreator) return replay(mess.botowner)
+	if (!text) return replay(`💴 *Bank-capacity* 💳\n\n1 | *1000 sp* = 💎100\n\n2 | *100000 sp* = 💎1000\n\n3 | *10000000 sp* = 💎10000000\n\nExample- ${prefix}capacity 1 OR ${prefix}bankupgrade 1000`)	
+	if (m.quoted?.sender) m.mentionedJid.push(m.quoted.sender)
+        const user = m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
+	const cara = "cara"
+	let value = text.trim();
+	let k = parseInt(value)
+	const balance  = await eco.balance(user, cara)
+  switch (value) {
+          case '1000':
+          case '1':
+          if (k > balance.wallet ) return replay(`*You need to pay 💎100 to increase bank capacity ~ 1000 sp*`);
+            const deduct1 = await eco.deduct(user, cara, 100);
+            const add1 = eco.giveCapacity(user, cara, 1000); 
+                await replay(`*1000 💎diamond storage has been added in ${pushname} bank*`)
+     
+                break
+          case '100000':
+          case '2':
+          if (k < balance.wallet) return replay(`*You need to pay 💎1000 to increase bank capacity ~ 100000 sp*`);
+            const deduct2 = await eco.deduct(user, cara, 1000);
+            const add2 = eco.giveCapacity(user, cara, 100000); 
+                await replay(`*100000 💎diamond storage has been added in ${pushname} bank*`)
+     
+                break
+          case '10000000':
+          case '3':
+          if (k < balance.wallet) return replay(`You need to pay 💎10000 to increase bank capacity ~ 1000 sp`);
+             const deduct3 = await eco.deduct(user, cara, 10000);
+             const add3 = eco.giveCapacity(user, cara, 10000000); 
+                 await replay(`*10000000 💎diamond storage has been added in ${pushname} bank*`)
+     
+               break
+  default:
+   await replay('*What are you trying to do*.')
+   
+   }
+
+}
+break
+
+
+
+//---------------deposit--------------------
+
+
+case 'deposit':  case 'pay-in': {
+        if (isBan) return reply(mess.banned)	 			
+        if (m.quoted?.sender) m.mentionedJid.push(m.quoted.sender)
+		if (!text) return replay("Provide the amount you want to deposit!");
+		const texts = text.trim();
+		const user = m.sender;
+		const cara = 'cara'
+        const deposit = await eco.deposit(user, cara, texts);
+            if(deposit.noten) return replay('You can\'t deposit what you don\'t have.'); //if user states more than whats in his wallet
+             replay(`Successfully Deposited 💎${deposit.amount} to your bank.`)
+		
+}
+break
+
+
+//--------------transfer---------------------
+
+
+
+case 'transfer':  case 'give': {
+        if (isBan) return reply(mess.banned)	 			
+        if (isBanChat) return reply(mess.bangc)
+	let value = text.trim().split(" ");
+	if (value[0] === "") return replay(`Use ${prefix}transfer 100 @user`);
+	const target =
+			             m.quoted && m.mentionedJid.length === 0
+			             ? m.quoted.sender
+			             : m.mentionedJid[0] || null;    
+           if (!target || target === m.sender) return replay("what are you trying to do!")
+           if (m.quoted?.sender && !m.mentionedJid.includes(m.quoted.sender)) m.mentionedJid.push(m.quoted.sender)
+        while (m.mentionedJid.length < 2) m.mentionedJid.push(m.sender)
+        const cara = "cara"
+        const user1 = m.sender
+        const user2 = target
+		           const word = value[0];
+		           const code = value[1];
+		let d = parseInt(word)
+		if (!d) return replay("check your text plz u r using the command in a wrong way")
+		
+		const balance = await eco.balance(user1, cara); 
+        let a = (balance.wallet) < parseInt(word)
+        //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.	
+        if(a == true) return replay("you dont have sufficient money to transfer");
+        
+        const deduct = await eco.deduct(user1, cara, value[0]);
+        const give = await eco.give(user2, cara, value[0]);
+        replay(`*🎐 Transaction successful*`)
+
+}
+break
+			
+	
+
+//--------------bank/wallet---------------------
+
+case 'wallet':  case 'purse': {
+        if (isBan) return reply(mess.banned)	 			
+        if (isBanChat) return reply(mess.bangc)
+	if (m.quoted?.sender) m.mentionedJid.push(m.quoted.sender)
+    const user = m.sender
+    const cara = "cara"
+    const balance = await eco.balance(user, cara); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
+    await replay(`*💰 ${pushname}'s Purse:*\n\n_💎${balance.wallet}_`);
+}
+break
+			
+	
+case 'bank':  case 'levee': {
+	if (m.quoted?.sender) m.mentionedJid.push(m.quoted.sender)
+        if (isBan) return reply(mess.banned)	 			
+        if (isBanChat) return reply(mess.bangc)
+    const user = m.sender
+    const cara = "cara"
+    const balance = await eco.balance(user, cara); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
+    await replay(`*🏦 ${pushname}'s Bank:*\n\n_💎${balance.bank}/${balance.bankCapacity}_`); 
+}
+break
+
+
+
+//--------------rob---------------------
+
+case 'rob':  case 'attack': {
+	if (!text) return replay(`Use ${prefix}rob @user`)
+	const target =
+			             m.quoted && m.mentionedJid.length === 0
+			             ? m.quoted.sender
+			             : m.mentionedJid[0] || null;    
+           if (!target || target === m.sender) return replay("what are you trying to do!")
+           if (m.quoted?.sender && !m.mentionedJid.includes(m.quoted.sender)) m.mentionedJid.push(m.quoted.sender)
+        while (m.mentionedJid.length < 2) m.mentionedJid.push(m.sender)
+        const cara = "cara"
+        const user1 = m.sender
+        const user2 = target
+	    const k = 250
+	const balance1  = await eco.balance(user1, cara)
+	const balance2  = await eco.balance(user2, cara)
+	const typ = ['ran','rob','caught'];
+    const random = typ[Math.floor(Math.random() * typ.length)];
+    if (k > balance1.wallet) return replay(`*☹️ You don't have enough money to pay incase you get caught*`);
+    if (k > balance2.wallet) return replay(`*Sorry, your victim is too poor 🤷🏽‍♂️ let go.*`);
+    let tpy = random
+  switch (random) {
+          case 'ran':
+                await replay(`*Your victim escaped, be more scaryðŸ˜¤ next time.*`)
+     
+                break
+          case 'rob':
+            const deduct1 = await eco.deduct(user2, cara, balance2.wallet);
+            const add2 = eco.give(user1, cara, balance2.wallet); 
+                await replay(`*🤑 Robbery operation successfully.🗡️*`)
+     
+                break
+          case 'caught':
+             const deduct2 = await eco.deduct(user1, cara, balance1.wallet); 
+                 await replay(`*Sorry FBI👮 caught up with you, you lost all 💎 in wallet.*`)
+     
+               break
+  default:
+   await replay('*What are you trying to do*.')
+   
+   }
+
+}
+break
+
+//--------------withdraw---------------------
+
+case 'withdraw':  case 'withdrawal': {
+      if (isBan) return reply(mess.banned)	 			
+      if (isBanChat) return reply(mess.bangc)
+      if (m.quoted?.sender) m.mentionedJid.push(m.quoted.sender)
+        const user = m.sender
+		if (!text) return replay("*Provide the amount you want to withdraw!*");
+		const query = text.trim();
+        const cara = 'cara'
+        const withdraw = await eco.withdraw(user, cara, query);
+        if(withdraw.noten) return replay('*🏧 Insufficient fund in bank*'); //if user states more than whats in his wallet
+        const add = eco.give(user, cara, query);
+          replay(`*🏧 ALERT*  _💎${withdraw.amount} has been added in your wallet._`)
+        
+}
+break
+
+
+//---------------gamble--------------------
+
+
+case 'gamble':  case 'bet': {
+        if (isBan) return reply(mess.banned)	 			
+        if (isBanChat) return reply(mess.bangc)
+	const texts = text.trim().split(" ");
+		if (texts[0] === "")
+			return replay(
+				`Example:  ${prefix}gamble 100 direction(left,right,up,down)`
+			);
+    const opp = texts[1];// your value
+    const value = texts[0].toLowerCase();
+    if (!value) return replay("*Please, specify the amount you are gambling with!*");
+    if (!opp) return replay("*Specify the direction you are betting on!*");
+    let gg = parseInt(value)
+    if (!gg) return replay("*Check your text please, You are using the command in a wrong way*")
+    if (m.quoted?.sender) m.mentionedJid.push(m.quoted.sender)
+    const user = m.sender //m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
+    const cara = 'cara'
+    const balance = await eco.balance(user, cara); 
+    let g = (balance.wallet) > parseInt(value)
+    if(g == false) return replay(`*You don't have sufficient 💎 Diamond to gamble with*`);
+    let k = 50
+    let a = (k) > parseInt(value)
+   //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.	
+    if (a == true) return replay(`*Sorry ${pushname}, you can only gamble with more than 💎50.*`);
+                //if(balance.wallet < value) return replay('no enough money');
+    const f = ["left", "right", "up", "down"]
+    const r = f[Math.floor(Math.random () * f.length)]
+    if ( r == opp){
+    const give = await eco.give(user , cara, texts[0]);
+    replay(`*📉 You won 💎${texts[0]}*`)
+    }else{
+    const deduct = await eco.deduct(user, cara, texts[0]);
+    replay(`*📈 You lost 💎${texts[0]}*`)
+    }       
+     
+
+
+   
+
+}
 break
 
 
