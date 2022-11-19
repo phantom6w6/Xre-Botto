@@ -3,14 +3,14 @@
     <img src="https://c.tenor.com/NJVFjOYEcsIAAAAC/miku-gotoubun.gif" width="610">
      
 </p>
-<h1 align="center"> Miku Nakano (Beta)
+<h1 align="center"> Arora (Beta)
 </h1>
 <p align="center"> 
-  Konochiwa Senpai, I am "Miku Nakano" a WhatsApp bot made by Fantox to do everything that is possible on WhatsApp based on WhatsApp Multi Device(MD) Support.
+  Konochiwa Senpai, I am "Arora" a WhatsApp bot made by Phantom to do everything that is possible on WhatsApp based on WhatsApp Multi Device(MD) Support.
 
 <p align="center">
   <a href="https://github.com/FantoX001/Miku-MD/fork">
-    <img src="https://img.shields.io/github/forks/FantoX001/Miku-MD?label=Fork&style=social">
+    <img src="https://img.shields.io/github/forks/phantom6w6/Xre-Botto?label=Fork&style=social">
     
     
   <a href="https://github.com/FantoX001/Miku-MD/stargazers">
@@ -19,7 +19,7 @@
 
  
 <a href="https://github.com/FantoX001">
-    <img src="(https://visitor-badge.glitch.me/badge?page_id=https://github.com/FantoX001/Shikimori-MD.visitor-badge&left_text=Total%20Repo%20Visitors)">
+    <img src="(https://visitor-badge.glitch.me/badge?page_id=https://github.com/phantom6w6/Xre-Botto.visitor-badge&left_text=Total%20Repo%20Visitors)">
   </a>
 </br>
       
@@ -49,9 +49,9 @@
 
 </details>
 
-## ✧✧✧ Why use Miku as your Base?
+## ✧✧✧ Why use Arora as your Base?
 <details open>
-<summary>Highlights of Miku MD</summary>
+<summary>Highlights of Arora</summary>
 <br>
 
 ```
@@ -68,7 +68,7 @@
 ✧ The main motto of this project is to provide Beginner Devs a base without any limitations 😊.
 ✧ Check "Credits" section and Support Them too.
 
--regards FantoX001
+-regards Phantom
 ```
 
 </details>
@@ -78,7 +78,7 @@
 
 <a href="https://youtu.be/fZdM7Ahb4JE"><img src="https://i.ibb.co/71mYRh4/116-1161192-podcast-subscribe-listen-button-youtube-sign-hd-png.png" alt="Watch tutorial on YouTube" border="0"  width="160"></a>
 
-Here's the Video Tuturial for Deploying and Hosting Miku Bot on Heroku.
+Here's the Video Tuturial for Deploying and Hosting Arora Bot on Heroku.
 
 ## ✧✧✧ Heroku Deployment Method:
 
@@ -162,7 +162,7 @@ npm i
 npm start
 ```
 
-## ✧✧✧ To keep Miku alive without internet 24/7
+## ✧✧✧ To keep Arora alive without internet 24/7
 
 ```
 npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
@@ -183,7 +183,8 @@ npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
 
 
 ## ✧ Contribution:
-- Project [Contributors](https://github.com/FantoX001/Miku-MD/graphs/contributors)
+- Project [Contributors](https://github.com/FantoX001/Xre-Botto/graphs/contributors)
+- bot [Contributors](https://github.com/phantom6w6/Xre-Botto
 - There are many more contributors in this project.
 - Please feel free to contribute in this project. I will merge your respected contribute if i see it's really necessary.
 
@@ -191,7 +192,7 @@ npm i -g pm2 && pm2 start index.js && pm2 save && pm2 logs
 
 
 ## ✧ Help Me:
-- [`Follow`](https://github.com/FantoX001/#follow) me on GitHub to make me feel motivated.
+- [`Follow`](https://github.com/phantom6w6/#follow) me on GitHub to make me feel motivated.
 - Give my project a ⭐ if you liked it.
 
      
